@@ -1,0 +1,14 @@
+import express from 'express';
+import createExpensese from '../queries/expense.ts';
+
+const router = express.Router();
+
+export default router.post('/', async (req, res) => {
+  const {expense_id , user_id , category_id , amount , date , created_at} = req.body;
+  try {
+    const expense = await createExpensese(expense_id , user_id , category_id , amount , date , created_at);
+    res.status(201).json(expense);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
