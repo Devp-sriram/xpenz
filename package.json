@@ -1,0 +1,20 @@
+{
+  "name": "xpenz",
+  "version": "1.0.0",
+  "description": "backend for xpenz an expense tracker with rich ocr and ai capabilitities",
+  "license": "MIT",
+  "author": "devp-sriram",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "pg": "^8.15.6"
+  }
+}
