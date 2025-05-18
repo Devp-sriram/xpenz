@@ -2,7 +2,6 @@
   "name": "xpenz",
   "version": "1.0.0",
   "description": "backend for xpenz an expense tracker with rich ocr and ai capabilitities",
-  "license": "MIT",
   "author": "devp-sriram",
   "main": "index.ts",
   "type": "module",
