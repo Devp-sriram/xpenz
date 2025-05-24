@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import addExpense from './routes/addExpense.ts'
+import addExpense from './routes/addExpense.ts';
+import updateExpense from './routes/updateExpense.ts';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use((err, req, res, next) => {
 
 
 app.use('/addExpense',addExpense);
+app.use('/updateExpense',updateExpense);
 
 app.get('/',(req,res)=>{
   res.send('hello from xpenz')
