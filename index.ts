@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import getExpense from './routes/getExpense.ts';
 import addExpense from './routes/addExpense.ts';
 import updateExpense from './routes/updateExpense.ts';
+import deleteExpense from './routes/deleteExpense.ts';
 
 dotenv.config();
 
@@ -17,9 +19,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-
+app.use('/getExpense',getExpense);
 app.use('/addExpense',addExpense);
 app.use('/updateExpense',updateExpense);
+app.use('/deleteExpense',deleteExpense);
 
 app.get('/',(req,res)=>{
   res.send('hello from xpenz')
