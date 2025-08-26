@@ -20,7 +20,7 @@ export default function Page(){
 
  const isValid = () =>{
   return (
-    email && password.length >= 8 && company ? true :false
+    email && password.length >= 8 && username ? true :false
   ) 
  }
 
