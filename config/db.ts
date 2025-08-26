@@ -1,27 +1,37 @@
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { Pool } from "pg";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-});
+const DB_URL = process.env.DB_URL;
 
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('Error connecting to PostgreSQL:', err);
-  } else {
-    console.log('Connected to PostgreSQL at:', res.rows[0].now);
-  }
-});
+if (!DB_URL) {
+  throw new Error("❌ Missing DB_URL in environment variables");
+}
+
+// ✅ Cache the pool in globalThis to prevent creating new pools per request
+let pool;
+
+if (!global.pgPool) {
+  global.pgPool = new Pool({
+    connectionString: DB_URL,
+    ssl: { rejectUnauthorized: false }, // required for Neon
+  });
+
+  global.pgPool.query("SELECT NOW()", (err, res) => {
+    if (err) {
+      console.error("❌ Error connecting to PostgreSQL:", err);
+    } else {
+      console.log("✅ Connected to PostgreSQL at:", res.rows[0].now);
+    }
+  });
+}
+
+pool = global.pgPool;
 
 const query = (text, params) => pool.query(text, params);
 
 export default {
-  query: (text, params) => pool.query(text, params),
+  query,
   pool,
 };
