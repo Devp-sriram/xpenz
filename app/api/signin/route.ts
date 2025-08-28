@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/config/db';
-// import Company from '@/models/company';
-// import CheckUser from '../../../controllers/checkuser.js'
 import { hash } from "bcryptjs"
 
 async function handler(req: NextRequest) {
@@ -11,9 +9,9 @@ async function handler(req: NextRequest) {
   switch (method) {
     case 'POST':
       try { 
+
         try {
           body = await req.json();
-          //console.log(body)
         } catch (err) {
           return NextResponse.json(
             { error: "Lack of user input" },
@@ -21,14 +19,7 @@ async function handler(req: NextRequest) {
           );
         }
 
-        await db.pool.connect();
-        // await connectDb(); // make sure this is a function that connects to your database
         const { email , password , username } = body; // assuming password is sent in the request body
-
-        //if(await CheckUser(email)){
-        // console.log('fn'+ await CheckUser(email))
-        //    return NextResponse.json({ error:'user aldreay exist'},{status:400});
-        //}
 
         try{
           const { rows } = await db.query(
@@ -48,16 +39,8 @@ async function handler(req: NextRequest) {
 
         const hashedPassword = await hash(password , 12);
         try{
-
           const { rows } = await db.query('INSERT INTO users( username , email , password_hash) VALUES($1 ,$2 ,$3)', [ username , email , hashedPassword])
-          //const newUser = new Company({ email , password : hashedPassword , company });
-          //await newUser.save();
           return NextResponse.json({msg:'user craeted'},{status: 201});
-          // if(newUser){
-          //   return NextResponse.json({error:'user created'},{status:200})
-          // }else{
-          //  return NextResponse.json({error:'user not created'},{status:401})
-          // }
         }catch(err){
           console.log(err)
         }

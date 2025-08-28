@@ -28,10 +28,8 @@ export default function Page(){
     e.preventDefault();
     try{
     const response = await axios.post(`/api/signin`,{email,password,username}); 
-    console.log(response);
-      if(response.status === 200){
-          router.push('/login')
-      };
+    console.log(response)
+    router.push('/login')
     }catch(err){
        console.log(err) 
     }
